@@ -106,8 +106,7 @@ Any updates, bug fixes and improved functionality welcome!
 
 ## How to cite
 
-Okell TW (2023). Bloch Simulator for MRI pulse sequences: Initial release (v1.0.0). Zenodo. 
-[![DOI](https://zenodo.org/badge/643180360.svg)](https://zenodo.org/badge/latestdoi/643180360)
+Okell TW (2023). Bloch Simulator for MRI pulse sequences: Initial release (v1.0.0). Zenodo. https://doi.org/10.5281/zenodo.7952965
 
 ## Copyright
 
