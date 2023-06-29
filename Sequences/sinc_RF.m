@@ -1,14 +1,17 @@
-% This function returns an RF since pulse with flip angle alph
-% (degrees), phase phi (radians) and duration T seconds, sampled
-% at time intervals dt.  The shape and size of the pulse is determined by the
-% gradient strength, G_amp, gamma for protons, and the slab width, delta.  The number
-% of data points, N, and central data point, mid, are also returned.
+% This function returns an RF sinc pulse with flip angle alph (degrees),
+% phase phi (radians) and duration T (seconds), sampled at time intervals
+% dt (s). The shape and size of the pulse is determined by the gradient
+% strength, G_amp (mT/m), gamma for protons (rad/s/mT), and the slab width,
+% delta (m).  The number of data points, N, and central data point, mid,
+% are also returned. If HannWindow is set to true, a Hann window is also
+% applied to the sinc pulse to reduce ringing in the slice profile, at a
+% cost of a broader transition band.
 %
-% Tom Okell, May 2023
+% Tom Okell, June 2023
 %
-% [RF, N, mid] = sinc_RF(alph, phi, T, dt, G_amp, gamma, delta)
+% [RF, N, mid] = sinc_RF(alph, phi, T, dt, G_amp, gamma, delta, HannWindow)
 
-function [RF, N, mid] = sinc_RF(alph, phi, T, dt, G_amp, gamma, delta)
+function [RF, N, mid] = sinc_RF(alph, phi, T, dt, G_amp, gamma, delta, HannWindow)
   
   % Determine the required number of data points:
   N = round(T/dt);
@@ -40,11 +43,18 @@ function [RF, N, mid] = sinc_RF(alph, phi, T, dt, G_amp, gamma, delta)
       
     end
     
-    % Keep a running total of the sum of RF amplitudes for normalisation
-    % to the RF flip angle alpha.
-    RFsum = RFsum + RF(1,ii);
   end
+
+  % Apply a Hann Window if requested
+  if HannWindow
+      RF(1,:) = RF(1,:) .* Hann_window(N);
+  end
+  
+  % Keep a running total of the sum of RF amplitudes for normalisation
+  % to the RF flip angle alpha
+  RFsum = sum(RF(1,:));
   
   % Normalise to give the correct flip angle
   RF(1,:) = RF(1,:) * todeg2rad(alph) / ( gamma * RFsum * dt );
+
   
