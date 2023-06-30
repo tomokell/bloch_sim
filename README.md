@@ -94,7 +94,7 @@ Other key references for PCASL and VEPCASL are:
 ## Caveats
 - Most of this code was written back in 2008... I have tidied it up a little since then, but there may well be suboptimal coding, bugs etc., although it does replicate well the results from other papers (e.g. see `test_VEPCASL_position_and_v_dependence.m`). 
 - Although fast enough for my purposes, there are no doubt more efficient Bloch simulators out there, so if you need speed, it might be worth exploring other options.
-- The time step `dt` needs to be set short enough to sufficiently sample the RF and gradient waveforms. I have found it to be pretty robust until there are two few samples across e.g. an RF pulse to represent its shape correctly, but worth experimenting to make sure this is the case in new scenarios as well.
+- The time step `dt` needs to be set short enough to sufficiently sample the RF and gradient waveforms. I have found it to be pretty robust until there are too few samples across e.g. an RF pulse to represent its shape correctly, but worth experimenting to make sure this is the case in new scenarios as well.
 - There are mentions in the code of a Gaussian RF pulse from a DSV file. This data relies on a specific file and originates from an MRI scanner manufacturer so cannot be shared here.
 
 ## Dependencies
